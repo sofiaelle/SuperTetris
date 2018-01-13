@@ -17,6 +17,8 @@ public class Main {
 
     // The window handle
     private long window;
+    private int WINDOW_WIDTH = 800;
+    private int WINDOW_HEIGHT = 1000;
 
     public void run() {
         System.out.println("Hello LWJGL " + Version.getVersion() + "!");
@@ -48,7 +50,7 @@ public class Main {
         glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE); // the window will be resizable
 
         // Create the window
-        window = glfwCreateWindow(800, 1000, "Hello World!", NULL, NULL);
+        window = glfwCreateWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "Hello World!", NULL, NULL);
         if ( window == NULL )
             throw new RuntimeException("Failed to create the GLFW window");
 
@@ -75,12 +77,16 @@ public class Main {
                     (vidmode.width() - pWidth.get(0)) / 2,
                     (vidmode.height() - pHeight.get(0)) / 2
             );
+
+
         } // the stack frame is popped automatically
 
         // Make the OpenGL context current
         glfwMakeContextCurrent(window);
         // Enable v-sync
         glfwSwapInterval(1);
+
+
 
         // Make the window visible
         glfwShowWindow(window);
@@ -97,17 +103,42 @@ public class Main {
         // Set the clear color
         glClearColor(0.2f, 0.1f, 0.5f, 0.5f);
 
+        GL11.glMatrixMode(GL11.GL_PROJECTION);
+        GL11.glLoadIdentity();
+        GL11.glOrtho(0, WINDOW_WIDTH, 0, WINDOW_HEIGHT, 1, -1);
+        GL11.glMatrixMode(GL11.GL_MODELVIEW);
+
         // Run the rendering loop until the user has attempted to close
         // the window or has pressed the ESCAPE key.
         while ( !glfwWindowShouldClose(window) ) {
+
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear the framebuffer
+
+            drawSquare(0,0,100,100);
 
             glfwSwapBuffers(window); // swap the color buffers
 
             // Poll for window events. The key callback above will only be
             // invoked during this call.
             glfwPollEvents();
+
         }
+    }
+
+    public static void drawSquare(int x, int y, int height, int width) {
+        //draw square
+        // set the color of the quad (R,G,B,A)
+        GL11.glColor3f(0.5f,0.5f,1.0f);
+
+        // draw quad
+        GL11.glBegin(GL11.GL_QUADS);
+            GL11.glVertex2f(x,y);
+            GL11.glVertex2f(x,y+height);
+            GL11.glVertex2f(x+width,y+height);
+            GL11.glVertex2f(x+width,y);
+
+        GL11.glEnd();
+
     }
 
     public static void main(String[] args) {
