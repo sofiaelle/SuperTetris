@@ -13,6 +13,8 @@ import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.system.MemoryStack.*;
 import static org.lwjgl.system.MemoryUtil.*;
 
+import org.newdawn.slick.TrueTypeFont;
+
 public class Main {
 
     // The window handle
@@ -140,6 +142,10 @@ public class Main {
 
         GL11.glEnd();
 
+    }
+
+    public static void drawBlock(Block block) {
+        System.out.println("Type of block: " + block.getType());
     }
 
     public static void main(String[] args) {

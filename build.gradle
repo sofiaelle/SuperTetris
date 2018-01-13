@@ -56,4 +56,7 @@ dependencies {
 	compile "org.lwjgl:lwjgl-opengl:$lwjglVersion:$lwjglNatives"
 	compile "org.lwjgl:lwjgl-par:$lwjglVersion:$lwjglNatives"
 	compile "org.lwjgl:lwjgl-stb:$lwjglVersion:$lwjglNatives"
+	// https://mvnrepository.com/artifact/org.slick2d/slick2d-core
+	compile group: 'org.slick2d', name: 'slick2d-core', version: '1.0.2'
+
 }
