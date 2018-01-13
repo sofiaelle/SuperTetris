@@ -114,7 +114,8 @@ public class Main {
 
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear the framebuffer
 
-            drawSquare(0,0,100,100);
+            drawSquare(10,10,WINDOW_HEIGHT-100,WINDOW_WIDTH-300);
+            drawSquare(WINDOW_WIDTH-250,WINDOW_HEIGHT-500,410,200);
 
             glfwSwapBuffers(window); // swap the color buffers
 
