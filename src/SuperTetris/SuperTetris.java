@@ -8,6 +8,8 @@ public class SuperTetris extends BasicGame {
     private static int WINDOW_HEIGHT = 1000;
     private static Color BG_COLOR = new Color(0.2f, 0.1f, 0.5f, 1f);
     private static Color UI_COLOR = new Color(0.5f,0.5f,1.0f, 1f);
+    private TrueTypeFont logoFont;
+
 
     public SuperTetris() {
         super("SuperTetris");
@@ -35,6 +37,9 @@ public class SuperTetris extends BasicGame {
     {
         // Add stuff that needs to be loaded once, at game load
         container.getGraphics().setBackground(BG_COLOR);
+
+        // Load logo font
+        this.logoFont = Utils.createFont("res/RacingSansOne-Regular.ttf", 42f);
     }
 
     @Override
@@ -45,10 +50,12 @@ public class SuperTetris extends BasicGame {
 
     public void render(GameContainer container, Graphics g) throws SlickException
     {
-        // All rendering
-
-        // UI elements
+        // Logotype
+        g.setColor(Color.white);
+        container.getGraphics().setFont(logoFont);
         g.drawString("SuperTetris", 10, 40);
+
+        // Background rectangles
         g.setColor(UI_COLOR);
         g.fillRect(10,100,WINDOW_WIDTH-250,WINDOW_HEIGHT-200);
         g.fillRect(WINDOW_WIDTH-230,100,220,500);
