@@ -5,14 +5,17 @@ import org.newdawn.slick.*;
 public class SuperTetris extends BasicGame {
 
     private static int WINDOW_WIDTH = 800;
-    private static int WINDOW_HEIGHT = 1000;
-    private static int GAME_WINDOW_WIDTH =WINDOW_WIDTH-350;
+    private static int WINDOW_HEIGHT = 1020;
+    private static int GAME_WINDOW_WIDTH = WINDOW_WIDTH - 350;
+    private static int GRID_WIDTH = 10;
+    private static int GRID_HEIGTH = 20;
+    private static int GRID_SQUARE_SIZE = GAME_WINDOW_WIDTH / GRID_WIDTH;
     private static Color BG_COLOR = new Color(0.2f, 0.1f, 0.5f, 1f);
-    private static Color UI_COLOR = new Color(0.5f,0.5f,1.0f, 1f);
-    private static int SPAWN_X1 =100;
-    private static int SPAWN_X2 =GAME_WINDOW_WIDTH/10;
-    private static int SPAWN_Y1 =100;
-    private static int SPAWN_Y2 =GAME_WINDOW_WIDTH/10;
+    private static Color UI_COLOR = new Color(0.5f, 0.5f, 1.0f, 1f);
+    private static int SPAWN_X1 = 100;
+    private static int SPAWN_X2 = GAME_WINDOW_WIDTH / 10;
+    private static int SPAWN_Y1 = 100;
+    private static int SPAWN_Y2 = GAME_WINDOW_WIDTH / 10;
     private TrueTypeFont logoFont;
     Block block1 = new Block(BlockType.CUBE);
 
@@ -22,14 +25,11 @@ public class SuperTetris extends BasicGame {
     }
 
     public static void main(String[] args) {
-        try
-        {
+        try {
             AppGameContainer app = new AppGameContainer(new SuperTetris());
             app.setDisplayMode(WINDOW_WIDTH, WINDOW_HEIGHT, false);
             app.start();
-        }
-        catch (SlickException e)
-        {
+        } catch (SlickException e) {
             e.printStackTrace();
         }
     }
@@ -142,8 +142,7 @@ public class SuperTetris extends BasicGame {
     }
 
     @Override
-    public void init(GameContainer container) throws SlickException
-    {
+    public void init(GameContainer container) throws SlickException {
         // Add stuff that needs to be loaded once, at game load
         container.getGraphics().setBackground(BG_COLOR);
 
@@ -154,13 +153,11 @@ public class SuperTetris extends BasicGame {
     }
 
     @Override
-    public void update(GameContainer container, int delta) throws SlickException
-    {
+    public void update(GameContainer container, int delta) throws SlickException {
         // Game logic that happens at each tick
     }
 
-    public void render(GameContainer container, Graphics g) throws SlickException
-    {
+    public void render(GameContainer container, Graphics g) throws SlickException {
         // Logotype
         g.setColor(Color.white);
         container.getGraphics().setFont(logoFont);
@@ -168,9 +165,17 @@ public class SuperTetris extends BasicGame {
 
         // Background rectangles
         g.setColor(UI_COLOR);
-        g.fillRect(10,100,GAME_WINDOW_WIDTH,WINDOW_HEIGHT-120);
-        g.fillRect(WINDOW_WIDTH-300,100,270,500);
+        g.fillRect(10, 100, GAME_WINDOW_WIDTH, WINDOW_HEIGHT - 120);
+        g.fillRect(WINDOW_WIDTH - 300, 100, 270, 500);
 
-        drawBlock(block1,g);
+        // Grid
+        for (int y = 0; y < GRID_HEIGTH; y++) {
+            for (int x = 0; x < GRID_WIDTH; x++) {
+                g.setColor(Color.black);
+                g.drawRect(10 + x * GRID_SQUARE_SIZE, 100 + y * GRID_SQUARE_SIZE, GRID_SQUARE_SIZE, GRID_SQUARE_SIZE);
+            }
+        }
+
+        //drawBlock(block1, g);
     }
 }
