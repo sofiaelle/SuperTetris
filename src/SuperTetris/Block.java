@@ -20,17 +20,21 @@ public class Block {
     private static int SPAWN_X2 = SuperTetris.GAME_WINDOW_WIDTH / 10;
     private static int SPAWN_Y1 = 100;
     private static int SPAWN_Y2 = SuperTetris.GAME_WINDOW_WIDTH / 10;
+    private Position[] position;
 
 
     public Block(BlockType type) {
         this.type = type;
+        this.position = getStartPosition();
     }
 
     public BlockType getType() {
         return this.type;
     }
 
-    public Position[] getPosition() {
+    public Position[] getPosition(){return this.position;}
+
+    public Position[] getStartPosition() {
         //Position[] list_position = new Position[4];
         if (this.type == BlockType.CUBE) {
             Position[] list_position = {
@@ -124,6 +128,10 @@ public class Block {
             }
         }
 
+        public void setPosition(Position pos1, Position pos2, Position pos3, Position pos4){
+            Position[] list_position = {pos1,pos2,pos3,pos4};
+            this.position = list_position;
+        }
 
     public void drawBlock(Graphics g) {
         Position[] list_positions = this.getPosition();
@@ -140,6 +148,15 @@ public class Block {
         g.drawRect(list_positions[2].x,list_positions[2].y,SuperTetris.GRID_SQUARE_SIZE,SuperTetris.GRID_SQUARE_SIZE);
         g.drawRect(list_positions[3].x,list_positions[3].y,SuperTetris.GRID_SQUARE_SIZE,SuperTetris.GRID_SQUARE_SIZE);
 
+    }
+
+    public void moveBlock(){
+        Position[] current_position = getPosition();
+        Position pos1 = new Position(current_position[0].x, current_position[0].y+SuperTetris.GRID_SQUARE_SIZE);
+        Position pos2 = new Position(current_position[1].x, current_position[1].y+SuperTetris.GRID_SQUARE_SIZE);
+        Position pos3 = new Position(current_position[2].x, current_position[2].y+SuperTetris.GRID_SQUARE_SIZE);
+        Position pos4 = new Position(current_position[3].x, current_position[3].y+SuperTetris.GRID_SQUARE_SIZE);
+        setPosition(pos1,pos2,pos3,pos4);
     }
 }
 

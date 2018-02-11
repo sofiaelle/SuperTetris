@@ -13,6 +13,7 @@ public class SuperTetris extends BasicGame {
     public static int GRID_SQUARE_SIZE = GAME_WINDOW_WIDTH / GRID_WIDTH;
     private static Color BG_COLOR = new Color(0.2f, 0.1f, 0.5f, 1f);
     private static Color UI_COLOR = new Color(0.5f, 0.5f, 1.0f, 1f);
+    private int since_tick = 0;
 
     private TrueTypeFont logoFont;
     Block block1 = new Block(BlockType.CUBE);
@@ -51,8 +52,13 @@ public class SuperTetris extends BasicGame {
     public void update(GameContainer container, int delta) throws SlickException {
         // Game logic that happens at each tick
 
+        since_tick += delta;
         //move block
-        System.out.println(delta);
+        if (since_tick > 1000){
+            since_tick =0;
+            System.out.println("new since_tick");
+            block1.moveBlock();
+        }
 
 
         //change grid status
