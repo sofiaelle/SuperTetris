@@ -1,21 +1,19 @@
 package SuperTetris;
 
 import org.newdawn.slick.*;
+//import java.util.TimerTask;
 
 public class SuperTetris extends BasicGame {
 
     private static int WINDOW_WIDTH = 800;
     private static int WINDOW_HEIGHT = 1020;
-    private static int GAME_WINDOW_WIDTH = WINDOW_WIDTH - 350;
+    public static int GAME_WINDOW_WIDTH = WINDOW_WIDTH - 350;
     private static int GRID_WIDTH = 10;
     private static int GRID_HEIGTH = 20;
-    private static int GRID_SQUARE_SIZE = GAME_WINDOW_WIDTH / GRID_WIDTH;
+    public static int GRID_SQUARE_SIZE = GAME_WINDOW_WIDTH / GRID_WIDTH;
     private static Color BG_COLOR = new Color(0.2f, 0.1f, 0.5f, 1f);
     private static Color UI_COLOR = new Color(0.5f, 0.5f, 1.0f, 1f);
-    private static int SPAWN_X1 = 100;
-    private static int SPAWN_X2 = GAME_WINDOW_WIDTH / 10;
-    private static int SPAWN_Y1 = 100;
-    private static int SPAWN_Y2 = GAME_WINDOW_WIDTH / 10;
+
     private TrueTypeFont logoFont;
     Block block1 = new Block(BlockType.CUBE);
 
@@ -34,112 +32,7 @@ public class SuperTetris extends BasicGame {
         }
     }
 
-    public static void drawBlock(Block block, Graphics g) {
-        System.out.println("Type of block: " + block.getType());
 
-/*
-        //Block1 (pyramid)
-        g.setColor(Color.cyan);
-        g.fillRect(SPAWN_X1,SPAWN_Y1,SPAWN_X2,SPAWN_Y2);
-        g.fillRect(SPAWN_X1+SPAWN_X2,SPAWN_Y1+SPAWN_Y2,SPAWN_X2,SPAWN_Y2);
-        g.fillRect(SPAWN_X1+SPAWN_X2,SPAWN_Y1,SPAWN_X2,SPAWN_Y2);
-        g.fillRect(SPAWN_X1+SPAWN_X2*2,SPAWN_Y1,SPAWN_X2,SPAWN_Y2);
-
-        g.setColor(Color.black);
-        g.drawRect(SPAWN_X1,SPAWN_Y1,SPAWN_X2,SPAWN_Y2);
-        g.drawRect(SPAWN_X1+SPAWN_X2,SPAWN_Y1+SPAWN_Y2,SPAWN_X2,SPAWN_Y2);
-        g.drawRect(SPAWN_X1+SPAWN_X2,SPAWN_Y1,SPAWN_X2,SPAWN_Y2);
-        g.drawRect(SPAWN_X1+SPAWN_X2*2,SPAWN_Y1,SPAWN_X2,SPAWN_Y2);
-
-
-        //block2 (straight line)
-        g.setColor(Color.magenta);
-        g.fillRect(SPAWN_X1,SPAWN_Y1,SPAWN_X2,SPAWN_Y2);
-        g.fillRect(SPAWN_X1+SPAWN_X2,SPAWN_Y1,SPAWN_X2,SPAWN_Y2);
-        g.fillRect(SPAWN_X1+SPAWN_X2*2,SPAWN_Y1,SPAWN_X2,SPAWN_Y2);
-        g.fillRect(SPAWN_X1+SPAWN_X2*3,SPAWN_Y1,SPAWN_X2,SPAWN_Y2);
-
-        g.setColor(Color.black);
-        g.drawRect(SPAWN_X1,SPAWN_Y1,SPAWN_X2,SPAWN_Y2);
-        g.drawRect(SPAWN_X1+SPAWN_X2,SPAWN_Y1,SPAWN_X2,SPAWN_Y2);
-        g.drawRect(SPAWN_X1+SPAWN_X2*2,SPAWN_Y1,SPAWN_X2,SPAWN_Y2);
-        g.drawRect(SPAWN_X1+SPAWN_X2*3,SPAWN_Y1,SPAWN_X2,SPAWN_Y2);
-
-
-        //block3 (z-form)
-        g.setColor(Color.green);
-        g.fillRect(SPAWN_X1,SPAWN_Y1,SPAWN_X2,SPAWN_Y2);
-        g.fillRect(SPAWN_X1+SPAWN_X2,SPAWN_Y1,SPAWN_X2,SPAWN_Y2);
-        g.fillRect(SPAWN_X1+SPAWN_X2,SPAWN_Y1+SPAWN_Y2,SPAWN_X2,SPAWN_Y2);
-        g.fillRect(SPAWN_X1+SPAWN_X2*2,SPAWN_Y1+SPAWN_Y2,SPAWN_X2,SPAWN_Y2);
-
-        g.setColor(Color.black);
-        g.drawRect(SPAWN_X1,SPAWN_Y1,SPAWN_X2,SPAWN_Y2);
-        g.drawRect(SPAWN_X1+SPAWN_X2,SPAWN_Y1,SPAWN_X2,SPAWN_Y2);
-        g.drawRect(SPAWN_X1+SPAWN_X2,SPAWN_Y1+SPAWN_Y2,SPAWN_X2,SPAWN_Y2);
-        g.drawRect(SPAWN_X1+SPAWN_X2*2,SPAWN_Y1+SPAWN_Y2,SPAWN_X2,SPAWN_Y2);
-
-
-        //block4 (reverse z)
-        g.setColor(Color.blue);
-        g.fillRect(SPAWN_X1,SPAWN_Y1+SPAWN_Y2,SPAWN_X2,SPAWN_Y2);
-        g.fillRect(SPAWN_X1+SPAWN_X2,SPAWN_Y1+SPAWN_Y2,SPAWN_X2,SPAWN_Y2);
-        g.fillRect(SPAWN_X1+SPAWN_X2,SPAWN_Y1,SPAWN_X2,SPAWN_Y2);
-        g.fillRect(SPAWN_X1+SPAWN_X2*2,SPAWN_Y1,SPAWN_X2,SPAWN_Y2);
-
-        g.setColor(Color.black);
-        g.drawRect(SPAWN_X1,SPAWN_Y1+SPAWN_Y2,SPAWN_X2,SPAWN_Y2);
-        g.drawRect(SPAWN_X1+SPAWN_X2,SPAWN_Y1+SPAWN_Y2,SPAWN_X2,SPAWN_Y2);
-        g.drawRect(SPAWN_X1+SPAWN_X2,SPAWN_Y1,SPAWN_X2,SPAWN_Y2);
-        g.drawRect(SPAWN_X1+SPAWN_X2*2,SPAWN_Y1,SPAWN_X2,SPAWN_Y2);
-
-
-        //block5 (cube)
-        g.setColor(Color.yellow);
-        g.fillRect(SPAWN_X1,SPAWN_Y1,SPAWN_X2,SPAWN_Y2);
-        g.fillRect(SPAWN_X1+SPAWN_X2,SPAWN_Y1,SPAWN_X2,SPAWN_Y2);
-        g.fillRect(SPAWN_X1,SPAWN_Y1+SPAWN_Y2,SPAWN_X2,SPAWN_Y2);
-        g.fillRect(SPAWN_X1+SPAWN_X2,SPAWN_Y1+SPAWN_Y2,SPAWN_X2,SPAWN_Y2);
-
-        g.setColor(Color.black);
-        g.drawRect(SPAWN_X1,SPAWN_Y1,SPAWN_X2,SPAWN_Y2);
-        g.drawRect(SPAWN_X1+SPAWN_X2,SPAWN_Y1,SPAWN_X2,SPAWN_Y2);
-        g.drawRect(SPAWN_X1,SPAWN_Y1+SPAWN_Y2,SPAWN_X2,SPAWN_Y2);
-        g.drawRect(SPAWN_X1+SPAWN_X2,SPAWN_Y1+SPAWN_Y2,SPAWN_X2,SPAWN_Y2);
-
-
-        //block6 (L-form)
-        g.setColor(Color.red);
-        g.fillRect(SPAWN_X1,SPAWN_Y1,SPAWN_X2,SPAWN_Y2);
-        g.fillRect(SPAWN_X1+SPAWN_X2,SPAWN_Y1,SPAWN_X2,SPAWN_Y2);
-        g.fillRect(SPAWN_X1+SPAWN_X2*2,SPAWN_Y1,SPAWN_X2,SPAWN_Y2);
-        g.fillRect(SPAWN_X1,SPAWN_Y1+SPAWN_Y2,SPAWN_X2,SPAWN_Y2);
-
-        g.setColor(Color.black);
-        g.drawRect(SPAWN_X1,SPAWN_Y1,SPAWN_X2,SPAWN_Y2);
-        g.drawRect(SPAWN_X1+SPAWN_X2,SPAWN_Y1,SPAWN_X2,SPAWN_Y2);
-        g.drawRect(SPAWN_X1+SPAWN_X2*2,SPAWN_Y1,SPAWN_X2,SPAWN_Y2);
-        g.drawRect(SPAWN_X1,SPAWN_Y1+SPAWN_Y2,SPAWN_X2,SPAWN_Y2);
-
-
-        //block7 (reverse L)
-        g.setColor(Color.pink);
-        g.fillRect(SPAWN_X1,SPAWN_Y1,SPAWN_X2,SPAWN_Y2);
-        g.fillRect(SPAWN_X1+SPAWN_X2,SPAWN_Y1,SPAWN_X2,SPAWN_Y2);
-        g.fillRect(SPAWN_X1+SPAWN_X2*2,SPAWN_Y1,SPAWN_X2,SPAWN_Y2);
-        g.fillRect(SPAWN_X1+SPAWN_X2*2,SPAWN_Y1+SPAWN_Y2,SPAWN_X2,SPAWN_Y2);
-
-        g.setColor(Color.black);
-        g.drawRect(SPAWN_X1,SPAWN_Y1,SPAWN_X2,SPAWN_Y2);
-        g.drawRect(SPAWN_X1+SPAWN_X2,SPAWN_Y1,SPAWN_X2,SPAWN_Y2);
-        g.drawRect(SPAWN_X1+SPAWN_X2*2,SPAWN_Y1,SPAWN_X2,SPAWN_Y2);
-        g.drawRect(SPAWN_X1+SPAWN_X2*2,SPAWN_Y1+SPAWN_Y2,SPAWN_X2,SPAWN_Y2);
-
-
-*/
-
-
-    }
 
     @Override
     public void init(GameContainer container) throws SlickException {
@@ -149,12 +42,20 @@ public class SuperTetris extends BasicGame {
         // Load logo font
         this.logoFont = Utils.createFont("res/RacingSansOne-Regular.ttf", 42f);
 
+        // create grid data
+        boolean[][] grid_data = new boolean[GRID_WIDTH][GRID_HEIGTH];
 
     }
 
     @Override
     public void update(GameContainer container, int delta) throws SlickException {
         // Game logic that happens at each tick
+
+        //move block
+        System.out.println(delta);
+
+
+        //change grid status
     }
 
     public void render(GameContainer container, Graphics g) throws SlickException {
@@ -176,6 +77,6 @@ public class SuperTetris extends BasicGame {
             }
         }
 
-        //drawBlock(block1, g);
+        block1.drawBlock(g);
     }
 }
