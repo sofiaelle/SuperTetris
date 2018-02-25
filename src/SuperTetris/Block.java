@@ -1,8 +1,6 @@
 package SuperTetris;
 
-import javafx.geometry.Pos;
 import org.newdawn.slick.Color;
-import org.newdawn.slick.Graphics;
 
 enum BlockType {
     CUBE,
@@ -15,13 +13,8 @@ enum BlockType {
 }
 
 public class Block {
-    BlockType type;
-    private static int SPAWN_X1 = 190;
-    private static int SPAWN_X2 = SuperTetris.GAME_WINDOW_WIDTH / 10;
-    private static int SPAWN_Y1 = 100;
-    private static int SPAWN_Y2 = SuperTetris.GAME_WINDOW_WIDTH / 10;
+    private BlockType type;
     private Position[] position;
-
 
     public Block(BlockType type) {
         this.type = type;
@@ -32,77 +25,90 @@ public class Block {
         return this.type;
     }
 
-    public Position[] getPosition(){return this.position;}
+    // Returns position in grid
+    public Position[] getPosition(){ return this.position; }
 
     public Position[] getStartPosition() {
-        //Position[] list_position = new Position[4];
         if (this.type == BlockType.CUBE) {
-            Position[] list_position = {
-                    new Position(SPAWN_X1, SPAWN_Y1),
-                    new Position(SPAWN_X1 + SPAWN_X2, SPAWN_Y1),
-                    new Position(SPAWN_X1, SPAWN_Y1 + SPAWN_Y2),
-                    new Position(SPAWN_X1 + SPAWN_X2, SPAWN_Y1 + SPAWN_Y2)};
-            return list_position;
+            //  X X
+            //  X X
+            Position[] positions = {
+                    new Position(4, 0),
+                    new Position(5, 0),
+                    new Position(4, 1),
+                    new Position(5, 1)
+            };
+            return positions;
 
+            //   X
+            // X X X
         } else if (this.type == BlockType.PYRAMID) {
-            Position[] list_position = {
-                    new Position(SPAWN_X1, SPAWN_Y1),
-                    new Position(SPAWN_X1 + SPAWN_X2, SPAWN_Y1 + SPAWN_Y2),
-                    new Position(SPAWN_X1 + SPAWN_X2, SPAWN_Y1),
-                    new Position(SPAWN_X1 + SPAWN_X2 * 2, SPAWN_Y1)};
-            return list_position;
+            Position[] positions = {
+                    new Position(4, 0),
+                    new Position(3, 1),
+                    new Position(4, 1),
+                    new Position(5, 1)};
+            return positions;
 
-        } else if (this.type == BlockType.STRAIGHT){
-            Position[] list_position = {
-                    new Position(SPAWN_X1, SPAWN_Y1),
-                    new Position(SPAWN_X1+SPAWN_X2,SPAWN_Y1),
-                    new Position(SPAWN_X1+SPAWN_X2*2,SPAWN_Y1),
-                    new Position(SPAWN_X1+SPAWN_X2*3,SPAWN_Y1)};
-            return list_position;
+            //  X X X X
+        } else if (this.type == BlockType.STRAIGHT) {
+            Position[] positions = {
+                    new Position(4, 0),
+                    new Position(4, 1),
+                    new Position(4, 2),
+                    new Position(4, 3)
+            };
+            return positions;
+            // X X
+            //   X X
+        } else if (this.type == BlockType.Z_FORM) {
+            Position[] positions = {
+                    new Position(4, 0),
+                    new Position(5, 0),
+                    new Position(5, 1),
+                    new Position(6, 1)
+            };
+            return positions;
 
-        } else if(this.type == BlockType.Z_FORM){
-            Position[] list_position = {
-                    new Position(SPAWN_X1, SPAWN_Y1),
-                    new Position(SPAWN_X1+SPAWN_X2,SPAWN_Y1),
-                    new Position(SPAWN_X1+SPAWN_X2,SPAWN_Y1+SPAWN_Y2),
-                    new Position(SPAWN_X1+SPAWN_X2*2,SPAWN_Y1+SPAWN_Y2)};
-            return list_position;
-
-        } else if (this.type == BlockType.REVERSE_Z){
+        } /*else if (this.type == BlockType.REVERSE_Z){
             Position[] list_position = {
                     new Position(SPAWN_X1,SPAWN_Y1+SPAWN_Y2),
                     new Position(SPAWN_X1+SPAWN_X2,SPAWN_Y1+SPAWN_Y2),
                     new Position(SPAWN_X1+SPAWN_X2,SPAWN_Y1),
                     new Position(SPAWN_X1+SPAWN_X2*2,SPAWN_Y1)};
             return list_position;
-
-        } else if (this.type == BlockType.L_FORM){
+            // X
+            // X
+            // X X
+        }*/ else if (this.type == BlockType.L_FORM) {
             Position[] list_position = {
-                    new Position(SPAWN_X1,SPAWN_Y1),
-                    new Position(SPAWN_X1+SPAWN_X2,SPAWN_Y1),
-                    new Position(SPAWN_X1+SPAWN_X2*2,SPAWN_Y1),
-                    new Position(SPAWN_X1,SPAWN_Y1+SPAWN_Y2)};
+                    new Position(4, 0),
+                    new Position(5, 0),
+                    new Position(5, 1),
+                    new Position(5, 2)};
             return list_position;
 
-        } else if (this.type == BlockType.REVERSE_L){
-            Position[] list_position = {
-                    new Position(SPAWN_X1,SPAWN_Y1),
-                    new Position(SPAWN_X1+SPAWN_X2,SPAWN_Y1),
-                    new Position(SPAWN_X1+SPAWN_X2*2,SPAWN_Y1),
-                    new Position(SPAWN_X1+SPAWN_X2*2,SPAWN_Y1+SPAWN_Y2)};
-            return list_position;
-        } else {
+        }/* else if (this.type == BlockType.REVERSE_L){
             Position[] list_position = {
                     new Position(SPAWN_X1,SPAWN_Y1),
                     new Position(SPAWN_X1+SPAWN_X2,SPAWN_Y1),
                     new Position(SPAWN_X1+SPAWN_X2*2,SPAWN_Y1),
                     new Position(SPAWN_X1+SPAWN_X2*2,SPAWN_Y1+SPAWN_Y2)};
             return list_position;
+        } */ else {
+            //  X X
+            //  X X
+            Position[] positions = {
+                    new Position(4, 0),
+                    new Position(5, 0),
+                    new Position(4, 1),
+                    new Position(5, 1)
+            };
+            return positions;
         }
-        }
+    }
 
-        public Color getColor() {
-
+    public Color getColor() {
             if (this.type == BlockType.CUBE) {
                 return Color.yellow;
 
@@ -126,37 +132,20 @@ public class Block {
             } else{
                 return Color.black;
             }
-        }
+    }
 
-        public void setPosition(Position pos1, Position pos2, Position pos3, Position pos4){
-            Position[] list_position = {pos1,pos2,pos3,pos4};
-            this.position = list_position;
-        }
-
-    public void drawBlock(Graphics g) {
-        Position[] list_positions = this.getPosition();
-
-        g.setColor(this.getColor());
-        g.fillRect(list_positions[0].x,list_positions[0].y,SuperTetris.GRID_SQUARE_SIZE,SuperTetris.GRID_SQUARE_SIZE);
-        g.fillRect(list_positions[1].x,list_positions[1].y,SuperTetris.GRID_SQUARE_SIZE,SuperTetris.GRID_SQUARE_SIZE);
-        g.fillRect(list_positions[2].x,list_positions[2].y,SuperTetris.GRID_SQUARE_SIZE,SuperTetris.GRID_SQUARE_SIZE);
-        g.fillRect(list_positions[3].x,list_positions[3].y,SuperTetris.GRID_SQUARE_SIZE,SuperTetris.GRID_SQUARE_SIZE);
-
-        g.setColor(Color.black);
-        g.drawRect(list_positions[0].x,list_positions[0].y,SuperTetris.GRID_SQUARE_SIZE,SuperTetris.GRID_SQUARE_SIZE);
-        g.drawRect(list_positions[1].x,list_positions[1].y,SuperTetris.GRID_SQUARE_SIZE,SuperTetris.GRID_SQUARE_SIZE);
-        g.drawRect(list_positions[2].x,list_positions[2].y,SuperTetris.GRID_SQUARE_SIZE,SuperTetris.GRID_SQUARE_SIZE);
-        g.drawRect(list_positions[3].x,list_positions[3].y,SuperTetris.GRID_SQUARE_SIZE,SuperTetris.GRID_SQUARE_SIZE);
-
+    public void setPosition(Position pos1, Position pos2, Position pos3, Position pos4) {
+            Position[] positions = { pos1, pos2, pos3, pos4 };
+            this.position = positions;
     }
 
     public void moveBlock(){
         Position[] current_position = getPosition();
-        Position pos1 = new Position(current_position[0].x, current_position[0].y+SuperTetris.GRID_SQUARE_SIZE);
-        Position pos2 = new Position(current_position[1].x, current_position[1].y+SuperTetris.GRID_SQUARE_SIZE);
-        Position pos3 = new Position(current_position[2].x, current_position[2].y+SuperTetris.GRID_SQUARE_SIZE);
-        Position pos4 = new Position(current_position[3].x, current_position[3].y+SuperTetris.GRID_SQUARE_SIZE);
-        setPosition(pos1,pos2,pos3,pos4);
+        Position pos1 = new Position(current_position[0].x, current_position[0].y + 1);
+        Position pos2 = new Position(current_position[1].x, current_position[1].y + 1);
+        Position pos3 = new Position(current_position[2].x, current_position[2].y + 1);
+        Position pos4 = new Position(current_position[3].x, current_position[3].y + 1);
+        this.setPosition(pos1, pos2, pos3, pos4);
     }
 }
 
