@@ -15,6 +15,7 @@ public class SuperTetris extends BasicGame {
     private static Color UI_COLOR = new Color(0.5f, 0.5f, 1.0f, 1f);
     private int since_tick = 0;
     private int tick_amount = 0;
+    private int click_amount = 0;
 
     private TrueTypeFont logoFont;
     Block block1 = new Block(BlockType.CUBE);
@@ -83,11 +84,13 @@ public class SuperTetris extends BasicGame {
         block1.drawBlock(g);
     }
     public void keyPressed(int key, char c){
-        if(key == Input.KEY_LEFT){
+        if(key == Input.KEY_LEFT && click_amount > -4){
             block1.moveBlockLeft();
+            click_amount -=1;
         }
-        else if (key == Input.KEY_RIGHT){
+        else if (key == Input.KEY_RIGHT && click_amount < 4){
             block1.moveBlockRight();
+            click_amount +=1;
         }
         else if (key == Input.KEY_DOWN){
             block1.moveBlockDown();
