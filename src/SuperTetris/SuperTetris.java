@@ -18,6 +18,7 @@ public class SuperTetris extends BasicGame {
     private int click_amount = 0;
     private int rand_int;
     private Block block1;
+    Music mainTetrisMusic;
 
     private TrueTypeFont logoFont;
 
@@ -40,14 +41,20 @@ public class SuperTetris extends BasicGame {
         // Add stuff that needs to be loaded once, at game load
         container.getGraphics().setBackground(BG_COLOR);
 
+        //Set background music
+        mainTetrisMusic = new Music("res/Tetris_theme.ogg");
+        mainTetrisMusic.loop();
+
         // Load logo font
         this.logoFont = Utils.createFont("res/RacingSansOne-Regular.ttf", 42f);
 
         // create grid data
         boolean[][] grid_data = new boolean[GRID_WIDTH][GRID_HEIGTH];
 
+        //Generates a list with values of block types
         BlockType[] list_block = BlockType.values();
 
+        //Generates a random block
         int block_number = randomBlockNumber();
         block1 = new Block(list_block[block_number]);
 
