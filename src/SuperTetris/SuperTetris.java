@@ -1,6 +1,7 @@
 package SuperTetris;
 
 import org.newdawn.slick.*;
+import java.util.Random;
 
 public class SuperTetris extends BasicGame {
 
@@ -14,10 +15,12 @@ public class SuperTetris extends BasicGame {
     private static Color BG_COLOR = new Color(0.2f, 0.1f, 0.5f, 1f);
     private static Color UI_COLOR = new Color(0.5f, 0.5f, 1.0f, 1f);
     private int since_tick = 0;
-
+    private int tick_amount = 0;
+    private int click_amount = 0;
+    private int rand_int;
+    private Block block1;
+    Music mainTetrisMusic;
     private TrueTypeFont logoFont;
-    Block block1;
-
     private boolean[][] grid = new boolean[GRID_WIDTH][GRID_HEIGHT];
 
     public SuperTetris() {
@@ -34,11 +37,14 @@ public class SuperTetris extends BasicGame {
         }
     }
 
-
     @Override
     public void init(GameContainer container) throws SlickException {
         // Add stuff that needs to be loaded once, at game load
         container.getGraphics().setBackground(BG_COLOR);
+
+        //Set background music
+        mainTetrisMusic = new Music("res/Tetris_theme.ogg");
+        mainTetrisMusic.loop();
 
         // Load logo font
         this.logoFont = Utils.createFont("res/RacingSansOne-Regular.ttf", 42f);
@@ -46,21 +52,26 @@ public class SuperTetris extends BasicGame {
         // create grid data
         this.block1 = new Block(BlockType.L_FORM);
 
+        //Generates a list with values of block types
+        BlockType[] list_block = BlockType.values();
+
+        //Generates a random block
+        int block_number = randomBlockNumber();
+        block1 = new Block(list_block[block_number]);
+
     }
 
     @Override
     public void update(GameContainer container, int delta) throws SlickException {
 
-        since_tick += delta;
+        this.since_tick += delta;
         //move block
-        if (since_tick > 1000){
-            since_tick =0;
-
+        if (this.since_tick > 1000) {
             // TODO: Do this correctly
             if(this.blockCanMoveDown(block1)) {
-                block1.moveBlock();
+                block1.moveBlockDown();
             }
-
+            this.since_tick = 0;
         }
 
     }
@@ -131,5 +142,25 @@ public class SuperTetris extends BasicGame {
                 new Position(pos[3].x * BLOCK_SIZE + X_PADDING, pos[3].y * BLOCK_SIZE + Y_PADDING)
         };
         return pixelPos;
+    }
+    public void keyPressed(int key, char c){
+        if(key == Input.KEY_LEFT && click_amount > -4){
+            block1.moveBlockLeft();
+            click_amount -=1;
+        }
+        else if (key == Input.KEY_RIGHT && click_amount < 4){
+            block1.moveBlockRight();
+            click_amount +=1;
+        }
+        else if (key == Input.KEY_DOWN){
+            block1.moveBlockDown();
+        }
+    }
+
+    private int randomBlockNumber(){
+        Random rand = new Random();
+        rand_int = rand.nextInt(7);
+
+        return rand_int;
     }
 }
