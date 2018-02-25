@@ -150,12 +150,30 @@ public class Block {
 
     }
 
-    public void moveBlock(){
+    public void moveBlockDown(){
         Position[] current_position = getPosition();
         Position pos1 = new Position(current_position[0].x, current_position[0].y+SuperTetris.GRID_SQUARE_SIZE);
         Position pos2 = new Position(current_position[1].x, current_position[1].y+SuperTetris.GRID_SQUARE_SIZE);
         Position pos3 = new Position(current_position[2].x, current_position[2].y+SuperTetris.GRID_SQUARE_SIZE);
         Position pos4 = new Position(current_position[3].x, current_position[3].y+SuperTetris.GRID_SQUARE_SIZE);
+        setPosition(pos1,pos2,pos3,pos4);
+    }
+
+    public void moveBlockLeft(){
+        Position[] current_position = getPosition();
+        Position pos1 = new Position(current_position[0].x - SuperTetris.GRID_SQUARE_SIZE, current_position[0].y);
+        Position pos2 = new Position(current_position[1].x - SuperTetris.GRID_SQUARE_SIZE, current_position[1].y);
+        Position pos3 = new Position(current_position[2].x - SuperTetris.GRID_SQUARE_SIZE, current_position[2].y);
+        Position pos4 = new Position(current_position[3].x - SuperTetris.GRID_SQUARE_SIZE, current_position[3].y);
+        setPosition(pos1,pos2,pos3,pos4);
+    }
+
+    public void moveBlockRight(){
+        Position[] current_position = getPosition();
+        Position pos1 = new Position(current_position[0].x + SuperTetris.GRID_SQUARE_SIZE, current_position[0].y);
+        Position pos2 = new Position(current_position[1].x + SuperTetris.GRID_SQUARE_SIZE, current_position[1].y);
+        Position pos3 = new Position(current_position[2].x + SuperTetris.GRID_SQUARE_SIZE, current_position[2].y);
+        Position pos4 = new Position(current_position[3].x + SuperTetris.GRID_SQUARE_SIZE, current_position[3].y);
         setPosition(pos1,pos2,pos3,pos4);
     }
 }

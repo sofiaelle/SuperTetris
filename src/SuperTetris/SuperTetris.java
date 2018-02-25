@@ -14,10 +14,10 @@ public class SuperTetris extends BasicGame {
     private static Color BG_COLOR = new Color(0.2f, 0.1f, 0.5f, 1f);
     private static Color UI_COLOR = new Color(0.5f, 0.5f, 1.0f, 1f);
     private int since_tick = 0;
+    private int tick_amount = 0;
 
     private TrueTypeFont logoFont;
     Block block1 = new Block(BlockType.CUBE);
-
 
     public SuperTetris() {
         super("SuperTetris");
@@ -32,8 +32,6 @@ public class SuperTetris extends BasicGame {
             e.printStackTrace();
         }
     }
-
-
 
     @Override
     public void init(GameContainer container) throws SlickException {
@@ -54,12 +52,11 @@ public class SuperTetris extends BasicGame {
 
         since_tick += delta;
         //move block
-        if (since_tick > 1000){
+        if (since_tick > 1000 && tick_amount <18){
             since_tick =0;
-            System.out.println("new since_tick");
-            block1.moveBlock();
+            tick_amount +=1;
+            block1.moveBlockDown();
         }
-
 
         //change grid status
     }
@@ -84,5 +81,16 @@ public class SuperTetris extends BasicGame {
         }
 
         block1.drawBlock(g);
+    }
+    public void keyPressed(int key, char c){
+        if(key == Input.KEY_LEFT){
+            block1.moveBlockLeft();
+        }
+        else if (key == Input.KEY_RIGHT){
+            block1.moveBlockRight();
+        }
+        else if (key == Input.KEY_DOWN){
+            block1.moveBlockDown();
+        }
     }
 }
