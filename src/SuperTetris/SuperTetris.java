@@ -1,7 +1,7 @@
 package SuperTetris;
 
 import org.newdawn.slick.*;
-//import java.util.TimerTask;
+import java.util.Random;
 
 public class SuperTetris extends BasicGame {
 
@@ -16,9 +16,10 @@ public class SuperTetris extends BasicGame {
     private int since_tick = 0;
     private int tick_amount = 0;
     private int click_amount = 0;
+    private int rand_int;
+    private Block block1;
 
     private TrueTypeFont logoFont;
-    Block block1 = new Block(BlockType.CUBE);
 
     public SuperTetris() {
         super("SuperTetris");
@@ -44,6 +45,11 @@ public class SuperTetris extends BasicGame {
 
         // create grid data
         boolean[][] grid_data = new boolean[GRID_WIDTH][GRID_HEIGTH];
+
+        BlockType[] list_block = BlockType.values();
+
+        int block_number = randomBlockNumber();
+        block1 = new Block(list_block[block_number]);
 
     }
 
@@ -95,5 +101,12 @@ public class SuperTetris extends BasicGame {
         else if (key == Input.KEY_DOWN){
             block1.moveBlockDown();
         }
+    }
+
+    private int randomBlockNumber(){
+        Random rand = new Random();
+        rand_int = rand.nextInt(7);
+
+        return rand_int;
     }
 }
