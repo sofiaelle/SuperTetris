@@ -68,7 +68,7 @@ public class SuperTetris extends BasicGame {
 
         this.sinceTick += delta;
         if (this.sinceTick >= 1000) {
-            if(this.blockCanMoveDown(currentBlock)) {
+            if(Collision.blockCanMoveDown(this.grid, currentBlock)) {
                 currentBlock.moveBlockDown();
             } else {
                 oldBlocks.add(currentBlock);
@@ -141,43 +141,6 @@ public class SuperTetris extends BasicGame {
 
     }
 
-    // TODO: Move blockCanMoveDown out from this class
-    private boolean blockCanMoveDown(Block block) {
-        Position[] currPos = block.getPosition();
-        boolean canMove = true;
-        for (Position p : currPos) {
-            if ((p.y == GRID_HEIGHT - 1) || (grid[p.x][p.y + 1])) {
-                canMove = false;
-                continue;
-            }
-        }
-        return canMove;
-    }
-
-    private boolean blockCanMoveLeft(Block block) {
-        Position[] currPos = block.getPosition();
-        boolean canMove = true;
-        for (Position p : currPos) {
-            if ((p.x == 0) || (grid[p.x - 1][p.y])) {
-                canMove = false;
-                continue;
-            }
-        }
-        return canMove;
-    }
-
-    private boolean blockCanMoveRight(Block block) {
-        Position[] currPos = block.getPosition();
-        boolean canMove = true;
-        for (Position p : currPos) {
-            if ((p.x == GRID_WIDTH - 1) || (grid[p.x + 1][p.y])) {
-                canMove = false;
-                continue;
-            }
-        }
-        return canMove;
-    }
-
     // TODO: Move getPixelPosition out from this class
     // Returns pixel positions from grid position
     public Position[] getPixelPosition(Position[] pos) {
@@ -193,13 +156,13 @@ public class SuperTetris extends BasicGame {
     }
 
     public void keyPressed(int key, char c) {
-        if (key == Input.KEY_LEFT && this.blockCanMoveLeft(currentBlock)) {
+        if (key == Input.KEY_LEFT && Collision.blockCanMoveLeft(this.grid, currentBlock)) {
             currentBlock.moveBlockLeft();
         }
-        else if (key == Input.KEY_RIGHT && this.blockCanMoveRight(currentBlock)){
+        else if (key == Input.KEY_RIGHT && Collision.blockCanMoveRight(this.grid, currentBlock)){
             currentBlock.moveBlockRight();
         }
-        else if (key == Input.KEY_DOWN && this.blockCanMoveDown(currentBlock)){
+        else if (key == Input.KEY_DOWN && Collision.blockCanMoveDown(this.grid, currentBlock)){
             currentBlock.moveBlockDown();
         } else if (key == Input.KEY_M) {
             if(mainTetrisMusic.playing()) {
