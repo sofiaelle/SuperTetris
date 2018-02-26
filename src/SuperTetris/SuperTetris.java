@@ -2,6 +2,7 @@ package SuperTetris;
 
 import org.newdawn.slick.*;
 import java.util.Random;
+import java.util.ArrayList;
 
 public class SuperTetris extends BasicGame {
 
@@ -14,14 +15,16 @@ public class SuperTetris extends BasicGame {
     private static int BLOCK_SIZE = GRID_SQUARE_SIZE;
     private static Color BG_COLOR = new Color(0.2f, 0.1f, 0.5f, 1f);
     private static Color UI_COLOR = new Color(0.5f, 0.5f, 1.0f, 1f);
-    private int since_tick = 0;
-    private int tick_amount = 0;
-    private int click_amount = 0;
-    private int rand_int;
-    private Block block1;
+    private int sinceTick = 0;
+    private int randInt;
+    private Block currentBlock;
     Music mainTetrisMusic;
     private TrueTypeFont logoFont;
     private boolean[][] grid = new boolean[GRID_WIDTH][GRID_HEIGHT];
+
+    //Generates a list with values of block types
+    BlockType[] list_block = BlockType.values();
+    ArrayList<Block> oldBlocks = new ArrayList<>();
 
     public SuperTetris() {
         super("SuperTetris");
@@ -50,28 +53,31 @@ public class SuperTetris extends BasicGame {
         this.logoFont = Utils.createFont("res/RacingSansOne-Regular.ttf", 42f);
 
         // create grid data
-        this.block1 = new Block(BlockType.L_FORM);
-
-        //Generates a list with values of block types
-        BlockType[] list_block = BlockType.values();
+        this.currentBlock = new Block(BlockType.L_FORM);
 
         //Generates a random block
-        int block_number = randomBlockNumber();
-        block1 = new Block(list_block[block_number]);
+        int blockNumber = randomBlockNumber();
+        currentBlock = new Block(list_block[blockNumber]);
 
     }
 
     @Override
     public void update(GameContainer container, int delta) throws SlickException {
 
-        this.since_tick += delta;
+        this.sinceTick += delta;
         //move block
-        if (this.since_tick > 1000) {
+        if (this.sinceTick > 1000) {
             // TODO: Do this correctly
-            if(this.blockCanMoveDown(block1)) {
-                block1.moveBlockDown();
+            if(this.blockCanMoveDown(currentBlock)) {
+                currentBlock.moveBlockDown();
+            }else{
+                oldBlocks.add(currentBlock);
+
+                //Generates a random block
+                int blockNumber = randomBlockNumber();
+                currentBlock = new Block(list_block[blockNumber]);
             }
-            this.since_tick = 0;
+            this.sinceTick = 0;
         }
 
     }
@@ -94,7 +100,6 @@ public class SuperTetris extends BasicGame {
         g.drawString("100"/* TODO: Insert score method here*/,650,100);
 
 
-
         // Grid
         for (int y = 0; y < GRID_HEIGHT; y++) {
             for (int x = 0; x < GRID_WIDTH; x++) {
@@ -103,7 +108,11 @@ public class SuperTetris extends BasicGame {
             }
         }
 
-        this.drawBlock(g, block1);
+        for (Block b : oldBlocks) {
+            this.drawBlock(g, b);
+        }
+
+        this.drawBlock(g, currentBlock);
     }
 
     // TODO: Would probably be nicer to have this method in some kind of renderUtils class
@@ -176,21 +185,21 @@ public class SuperTetris extends BasicGame {
     }
 
     public void keyPressed(int key, char c) {
-        if (key == Input.KEY_LEFT && this.blockCanMoveLeft(block1)) {
-            block1.moveBlockLeft();
+        if (key == Input.KEY_LEFT && this.blockCanMoveLeft(currentBlock)) {
+            currentBlock.moveBlockLeft();
         }
-        else if (key == Input.KEY_RIGHT && this.blockCanMoveRight(block1)){
-            block1.moveBlockRight();
+        else if (key == Input.KEY_RIGHT && this.blockCanMoveRight(currentBlock)){
+            currentBlock.moveBlockRight();
         }
-        else if (key == Input.KEY_DOWN && this.blockCanMoveDown(block1)){
-            block1.moveBlockDown();
+        else if (key == Input.KEY_DOWN && this.blockCanMoveDown(currentBlock)){
+            currentBlock.moveBlockDown();
         }
     }
 
     private int randomBlockNumber(){
         Random rand = new Random();
-        rand_int = rand.nextInt(7);
+        randInt = rand.nextInt(7);
 
-        return rand_int;
+        return randInt;
     }
 }
