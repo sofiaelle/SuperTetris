@@ -12,7 +12,7 @@ public class SuperTetris extends BasicGame {
     private static int GRID_WIDTH = 10;
     private static int GRID_HEIGHT = 20;
     public static int GRID_SQUARE_SIZE = GAME_WINDOW_WIDTH / GRID_WIDTH;
-    private static int BLOCK_SIZE = GRID_SQUARE_SIZE;
+    public static int BLOCK_SIZE = GRID_SQUARE_SIZE;
     private static Color BG_COLOR = new Color(0.2f, 0.1f, 0.5f, 1f);
     private static Color UI_COLOR = new Color(0.5f, 0.5f, 1.0f, 1f);
     private int sinceTick = 0;
@@ -117,42 +117,10 @@ public class SuperTetris extends BasicGame {
         }
 
         for (Block b : oldBlocks) {
-            this.drawBlock(g, b);
+            RenderUtils.drawBlock(g, b);
         }
+        RenderUtils.drawBlock(g, currentBlock);
 
-        this.drawBlock(g, currentBlock);
-    }
-
-    // TODO: Would probably be nicer to have this method in some kind of renderUtils class
-    private void drawBlock(Graphics g, Block block) {
-        Position[] positions = this.getPixelPosition(block.getPosition());
-
-        g.setColor(block.getColor());
-        g.fillRect(positions[0].x, positions[0].y,SuperTetris.GRID_SQUARE_SIZE,SuperTetris.GRID_SQUARE_SIZE);
-        g.fillRect(positions[1].x, positions[1].y,SuperTetris.GRID_SQUARE_SIZE,SuperTetris.GRID_SQUARE_SIZE);
-        g.fillRect(positions[2].x, positions[2].y,SuperTetris.GRID_SQUARE_SIZE,SuperTetris.GRID_SQUARE_SIZE);
-        g.fillRect(positions[3].x, positions[3].y,SuperTetris.GRID_SQUARE_SIZE,SuperTetris.GRID_SQUARE_SIZE);
-
-        g.setColor(Color.black);
-        g.drawRect(positions[0].x, positions[0].y,SuperTetris.GRID_SQUARE_SIZE,SuperTetris.GRID_SQUARE_SIZE);
-        g.drawRect(positions[1].x, positions[1].y,SuperTetris.GRID_SQUARE_SIZE,SuperTetris.GRID_SQUARE_SIZE);
-        g.drawRect(positions[2].x, positions[2].y,SuperTetris.GRID_SQUARE_SIZE,SuperTetris.GRID_SQUARE_SIZE);
-        g.drawRect(positions[3].x, positions[3].y,SuperTetris.GRID_SQUARE_SIZE,SuperTetris.GRID_SQUARE_SIZE);
-
-    }
-
-    // TODO: Move getPixelPosition out from this class
-    // Returns pixel positions from grid position
-    public Position[] getPixelPosition(Position[] pos) {
-        int X_PADDING = 10;
-        int Y_PADDING = 100;
-        Position[] pixelPos = {
-                new Position(pos[0].x * BLOCK_SIZE + X_PADDING, pos[0].y * BLOCK_SIZE + Y_PADDING),
-                new Position(pos[1].x * BLOCK_SIZE + X_PADDING, pos[1].y * BLOCK_SIZE + Y_PADDING),
-                new Position(pos[2].x * BLOCK_SIZE + X_PADDING, pos[2].y * BLOCK_SIZE + Y_PADDING),
-                new Position(pos[3].x * BLOCK_SIZE + X_PADDING, pos[3].y * BLOCK_SIZE + Y_PADDING)
-        };
-        return pixelPos;
     }
 
     public void keyPressed(int key, char c) {
