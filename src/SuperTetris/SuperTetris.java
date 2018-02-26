@@ -201,6 +201,12 @@ public class SuperTetris extends BasicGame {
         }
         else if (key == Input.KEY_DOWN && this.blockCanMoveDown(currentBlock)){
             currentBlock.moveBlockDown();
+        } else if (key == Input.KEY_M) {
+            if(mainTetrisMusic.playing()) {
+                mainTetrisMusic.pause();
+            } else {
+                mainTetrisMusic.resume();
+            }
         }
     }
 
