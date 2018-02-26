@@ -87,6 +87,14 @@ public class SuperTetris extends BasicGame {
         g.fillRect(10, 100, GAME_WINDOW_WIDTH, WINDOW_HEIGHT - 120);
         g.fillRect(WINDOW_WIDTH - 300, 100, 270, 500);
 
+        // Score text
+        g.setColor(Color.white);
+        container.getGraphics().setFont(logoFont);
+        g.drawString("Score: ",510,100);
+        g.drawString("100"/* TODO: Insert score method here*/,650,100);
+
+
+
         // Grid
         for (int y = 0; y < GRID_HEIGHT; y++) {
             for (int x = 0; x < GRID_WIDTH; x++) {
@@ -143,6 +151,7 @@ public class SuperTetris extends BasicGame {
         };
         return pixelPos;
     }
+
     public void keyPressed(int key, char c){
         if(key == Input.KEY_LEFT && click_amount > -4){
             block1.moveBlockLeft();
