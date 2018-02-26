@@ -150,20 +150,20 @@ public class Block {
 
     public void moveBlockLeft(){
         Position[] current_position = getPosition();
-        Position pos1 = new Position(current_position[0].x - SuperTetris.GRID_SQUARE_SIZE, current_position[0].y);
-        Position pos2 = new Position(current_position[1].x - SuperTetris.GRID_SQUARE_SIZE, current_position[1].y);
-        Position pos3 = new Position(current_position[2].x - SuperTetris.GRID_SQUARE_SIZE, current_position[2].y);
-        Position pos4 = new Position(current_position[3].x - SuperTetris.GRID_SQUARE_SIZE, current_position[3].y);
-        setPosition(pos1,pos2,pos3,pos4);
+        Position pos1 = new Position(current_position[0].x - 1, current_position[0].y);
+        Position pos2 = new Position(current_position[1].x - 1, current_position[1].y);
+        Position pos3 = new Position(current_position[2].x - 1, current_position[2].y);
+        Position pos4 = new Position(current_position[3].x - 1, current_position[3].y);
+        setPosition(pos1, pos2, pos3, pos4);
     }
 
     public void moveBlockRight(){
         Position[] current_position = getPosition();
-        Position pos1 = new Position(current_position[0].x + SuperTetris.GRID_SQUARE_SIZE, current_position[0].y);
-        Position pos2 = new Position(current_position[1].x + SuperTetris.GRID_SQUARE_SIZE, current_position[1].y);
-        Position pos3 = new Position(current_position[2].x + SuperTetris.GRID_SQUARE_SIZE, current_position[2].y);
-        Position pos4 = new Position(current_position[3].x + SuperTetris.GRID_SQUARE_SIZE, current_position[3].y);
-        setPosition(pos1,pos2,pos3,pos4);
+        Position pos1 = new Position(current_position[0].x + 1, current_position[0].y);
+        Position pos2 = new Position(current_position[1].x + 1, current_position[1].y);
+        Position pos3 = new Position(current_position[2].x + 1, current_position[2].y);
+        Position pos4 = new Position(current_position[3].x + 1, current_position[3].y);
+        setPosition(pos1, pos2, pos3, pos4);
     }
 }
 

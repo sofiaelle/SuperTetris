@@ -119,10 +119,33 @@ public class SuperTetris extends BasicGame {
     // TODO: Move blockCanMoveDown out from this class
     private boolean blockCanMoveDown(Block block) {
         Position[] currPos = block.getPosition();
-        System.out.println("CurrPos: " + currPos[0].x + ", " + currPos[0].y);
         boolean canMove = true;
         for (Position p : currPos) {
-            if ((p.y >= GRID_HEIGHT - 1) || (grid[p.x][p.y + 1])) {
+            if ((p.y == GRID_HEIGHT - 1) || (grid[p.x][p.y + 1])) {
+                canMove = false;
+                continue;
+            }
+        }
+        return canMove;
+    }
+
+    private boolean blockCanMoveLeft(Block block) {
+        Position[] currPos = block.getPosition();
+        boolean canMove = true;
+        for (Position p : currPos) {
+            if ((p.x == 0) || (grid[p.x - 1][p.y])) {
+                canMove = false;
+                continue;
+            }
+        }
+        return canMove;
+    }
+
+    private boolean blockCanMoveRight(Block block) {
+        Position[] currPos = block.getPosition();
+        boolean canMove = true;
+        for (Position p : currPos) {
+            if ((p.x == GRID_WIDTH - 1) || (grid[p.x + 1][p.y])) {
                 canMove = false;
                 continue;
             }
@@ -143,16 +166,15 @@ public class SuperTetris extends BasicGame {
         };
         return pixelPos;
     }
-    public void keyPressed(int key, char c){
-        if(key == Input.KEY_LEFT && click_amount > -4){
+
+    public void keyPressed(int key, char c) {
+        if (key == Input.KEY_LEFT && this.blockCanMoveLeft(block1)) {
             block1.moveBlockLeft();
-            click_amount -=1;
         }
-        else if (key == Input.KEY_RIGHT && click_amount < 4){
+        else if (key == Input.KEY_RIGHT && this.blockCanMoveRight(block1)){
             block1.moveBlockRight();
-            click_amount +=1;
         }
-        else if (key == Input.KEY_DOWN){
+        else if (key == Input.KEY_DOWN && this.blockCanMoveDown(block1)){
             block1.moveBlockDown();
         }
     }
