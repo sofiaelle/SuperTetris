@@ -64,22 +64,31 @@ public class SuperTetris extends BasicGame {
     @Override
     public void update(GameContainer container, int delta) throws SlickException {
 
+        this.grid = this.getGridState(this.oldBlocks);
+
         this.sinceTick += delta;
-        //move block
-        if (this.sinceTick > 1000) {
-            // TODO: Do this correctly
+        if (this.sinceTick >= 1000) {
             if(this.blockCanMoveDown(currentBlock)) {
                 currentBlock.moveBlockDown();
-            }else{
+            } else {
                 oldBlocks.add(currentBlock);
-
-                //Generates a random block
                 int blockNumber = randomBlockNumber();
                 currentBlock = new Block(list_block[blockNumber]);
             }
             this.sinceTick = 0;
         }
 
+    }
+
+    private boolean[][] getGridState(ArrayList<Block> blocks) {
+        boolean[][] newState = new boolean[GRID_WIDTH][GRID_HEIGHT];
+        for (Block b : blocks) {
+            for (Position p : b.getPosition()) {
+                newState[p.x][p.y] = true;
+            }
+        }
+
+        return newState;
     }
 
     public void render(GameContainer container, Graphics g) throws SlickException {
@@ -98,7 +107,6 @@ public class SuperTetris extends BasicGame {
         container.getGraphics().setFont(logoFont);
         g.drawString("Score: ",510,100);
         g.drawString("100"/* TODO: Insert score method here*/,650,100);
-
 
         // Grid
         for (int y = 0; y < GRID_HEIGHT; y++) {
