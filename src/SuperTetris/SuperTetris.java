@@ -3,6 +3,7 @@ package SuperTetris;
 import org.newdawn.slick.*;
 import java.util.Random;
 import java.util.ArrayList;
+import java.util.Stack;
 
 public class SuperTetris extends BasicGame {
 
@@ -21,6 +22,7 @@ public class SuperTetris extends BasicGame {
     Music mainTetrisMusic;
     private TrueTypeFont logoFont;
     private boolean[][] grid = new boolean[GRID_WIDTH][GRID_HEIGHT];
+    private Block incomingBlock;
 
     //Generates a list with values of block types
     BlockType[] list_block = BlockType.values();
@@ -56,8 +58,10 @@ public class SuperTetris extends BasicGame {
         this.currentBlock = new Block(BlockType.L_FORM);
 
         //Generates a random block
-        int blockNumber = randomBlockNumber();
-        currentBlock = new Block(list_block[blockNumber]);
+        currentBlock = new Block(list_block[randomBlockNumber()]);
+
+        //Creates the incoming block
+        incomingBlock = new Block(list_block[randomBlockNumber()]);
 
     }
 
@@ -72,8 +76,8 @@ public class SuperTetris extends BasicGame {
                 currentBlock.moveBlockDown();
             } else {
                 oldBlocks.add(currentBlock);
-                int blockNumber = randomBlockNumber();
-                currentBlock = new Block(list_block[blockNumber]);
+                currentBlock = incomingBlock;
+                incomingBlock = new Block(list_block[randomBlockNumber()]);
             }
             this.sinceTick = 0;
         }
@@ -108,6 +112,9 @@ public class SuperTetris extends BasicGame {
         g.drawString("Score: ",510,100);
         g.drawString("100"/* TODO: Insert score method here*/,650,100);
 
+        //Next block text
+        g.drawString("Next block:", 510,150 );
+
         // Grid
         for (int y = 0; y < GRID_HEIGHT; y++) {
             for (int x = 0; x < GRID_WIDTH; x++) {
@@ -119,6 +126,9 @@ public class SuperTetris extends BasicGame {
         for (Block b : oldBlocks) {
             RenderUtils.drawBlock(g, b);
         }
+
+        RenderUtils.drawIncomingBlock(g,incomingBlock);
+
         RenderUtils.drawBlock(g, currentBlock);
 
     }

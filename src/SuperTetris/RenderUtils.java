@@ -22,6 +22,32 @@ public class RenderUtils {
 
     }
 
+    public static void drawIncomingBlock(Graphics g, Block block){
+        Position[] pos = block.getPosition();
+        int X_PADDING = 410;
+        int Y_PADDING = 230;
+        int MINI_GRID_SQUARE_SIZE = 30;
+
+        Position[] positions = {
+                new Position(pos[0].x * SuperTetris.BLOCK_SIZE + X_PADDING, pos[0].y * SuperTetris.BLOCK_SIZE + Y_PADDING),
+                new Position(pos[1].x * SuperTetris.BLOCK_SIZE + X_PADDING, pos[1].y * SuperTetris.BLOCK_SIZE + Y_PADDING),
+                new Position(pos[2].x * SuperTetris.BLOCK_SIZE + X_PADDING, pos[2].y * SuperTetris.BLOCK_SIZE + Y_PADDING),
+                new Position(pos[3].x * SuperTetris.BLOCK_SIZE + X_PADDING, pos[3].y * SuperTetris.BLOCK_SIZE + Y_PADDING)
+        };
+
+        g.setColor(block.getColor());
+        g.fillRect(positions[0].x, positions[0].y, SuperTetris.BLOCK_SIZE, SuperTetris.BLOCK_SIZE);
+        g.fillRect(positions[1].x, positions[1].y, SuperTetris.BLOCK_SIZE, SuperTetris.BLOCK_SIZE);
+        g.fillRect(positions[2].x, positions[2].y, SuperTetris.BLOCK_SIZE, SuperTetris.BLOCK_SIZE);
+        g.fillRect(positions[3].x, positions[3].y, SuperTetris.BLOCK_SIZE, SuperTetris.BLOCK_SIZE);
+
+        g.setColor(Color.black);
+        g.drawRect(positions[0].x, positions[0].y, SuperTetris.BLOCK_SIZE, SuperTetris.BLOCK_SIZE);
+        g.drawRect(positions[1].x, positions[1].y, SuperTetris.BLOCK_SIZE, SuperTetris.BLOCK_SIZE);
+        g.drawRect(positions[2].x, positions[2].y, SuperTetris.BLOCK_SIZE, SuperTetris.BLOCK_SIZE);
+        g.drawRect(positions[3].x, positions[3].y, SuperTetris.BLOCK_SIZE, SuperTetris.BLOCK_SIZE);
+    }
+
     // Returns pixel positions from given grid position
     public static Position[] getPixelPosition(Position[] pos) {
         int X_PADDING = 10;
