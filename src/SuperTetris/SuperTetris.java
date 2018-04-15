@@ -148,7 +148,9 @@ public class SuperTetris extends BasicGame {
             } else {
                 mainTetrisMusic.resume();
             }
-        }
+        }/*else if (key == Input.KEY_UP && Collision.blockCanRotate(this.grid, currentBlock)){
+            currentBlock.rotateBlock();
+        }*/
     }
 
     private int randomBlockNumber(){

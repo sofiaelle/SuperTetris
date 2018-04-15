@@ -38,4 +38,12 @@ public class Collision {
         }
         return canMove;
     }
+
+   /* public static boolean blockCanRotate(boolean[][] grid, Block block) {
+        Position[] currPos = block.getPosition();
+        boolean canMove = true;
+        for (Position p : currPos) {
+
+        }
+    }*/
 }
